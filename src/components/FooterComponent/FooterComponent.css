@@ -1,0 +1,138 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Questrial&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Orelega+One&family=Questrial&display=swap');
+
+
+
+.footer{height: 20vh;
+
+}
+.medios-pago{ 
+    display: flex;
+    justify-content: center;
+    background-color:#DAB5a9 ;
+    color: #482115;
+    padding-top: 5px;
+    font-size: 32px;
+    font-family: "Orelega One", serif;
+    font-weight: 400;
+    font-style: normal;
+
+
+} 
+
+
+.icons-pago{
+    
+    display: grid;
+    grid-template-areas: "icon1 icon2"
+                          "transfer efect" ;
+    justify-content: space-evenly;
+    justify-items: stretch;
+    align-items: center;
+    background-color: #835242;
+    font-size: 25px;
+    text-align: center;
+}
+.icon-primero{
+    padding-top: 5px;
+    grid-area: icon1;
+}
+.icon-segundo{
+    padding-top: 8px;
+    padding-left: 10px;
+    grid-area: icon2;
+    
+}
+.transfer{
+    color: #f5f5f5;
+    grid-area: transfer;
+    padding-top: 5px;
+    font-size:20px;
+    text-align: center;
+    font-family: "Questrial", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+.efect{
+    color: #f5f5f5;
+    grid-area: efect;
+    padding-top: 5px;
+    font-size:20px;
+    text-align: center;
+    font-family: "Questrial", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+.local{
+    display: flex;
+    justify-content: center;
+    background-color:#DAB5a9  ;
+    color: #482115;
+    font-family: "Orelega One", serif;
+    font-weight: 400;
+    font-style: normal;
+    padding-top: 10px;
+
+}
+.direccion{
+    display: flex;
+    justify-content: center;
+    padding-top: 10px;
+    background-color: #835242;
+    color: #f5f5f5;
+    font-size: large;
+    font-family: "Questrial", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+
+}
+.encontranos{
+    display: flex;
+    justify-content: center;
+    background-color:#DAB5a9  ;
+    color: #482115;
+    font-family: "Orelega One", serif;
+    font-weight: 400;
+    font-style: normal;
+    padding-top: 10px;
+}
+.redes{
+    display: flex;
+    justify-content: space-evenly;
+    background-color: #835242;
+    color: #f5f5f5;
+    font-size: medium;
+}
+.ig{
+    font-family: "Questrial", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: larger;
+    padding-top: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+.fb{
+    font-family: "Questrial", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: larger;
+    padding-top: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.wp{
+    font-family: "Questrial", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: larger;
+    padding-top: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
