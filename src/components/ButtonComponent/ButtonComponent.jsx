@@ -1,7 +1,9 @@
+import "./ButtonComponent.css";
+
 const ButtonComponent = ({label, arialabel}) =>{
 
     return(
-<button> {label}</button>
+<button className="button-component"> {label}</button>
     );
 }
 
