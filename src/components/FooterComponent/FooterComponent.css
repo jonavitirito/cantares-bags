@@ -11,6 +11,7 @@ width: 100%;
 
 }
 .medios-pago{ 
+    height: max-content;
     display: flex;
     justify-content: center;
     background-color:#DAB5a9 ;
@@ -31,17 +32,19 @@ width: 100%;
     grid-template-areas: "icon1 icon2"
                           "transfer efect" ;
     justify-content: space-evenly;
-    justify-items: stretch;
+    justify-items: center;
     align-items: center;
     background-color: #835242;
     font-size: 25px;
     text-align: center;
 }
 .icon-primero{
+    width: 40%;
     padding-top: 5px;
     grid-area: icon1;
 }
 .icon-segundo{
+    
     padding-top: 8px;
     padding-left: 10px;
     grid-area: icon2;

@@ -2,5 +2,24 @@
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    justify-content: space-around;
     height: 70%;
+}
+.filter{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgb(155, 155, 155);
+    border: none;
+padding-top: 10px;
+    
+}
+.filter h3{
+    font-size: 20px;
+}
+.filter img{
+    
+    
+    width: 10%;
 }

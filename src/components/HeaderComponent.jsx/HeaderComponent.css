@@ -1,23 +1,58 @@
+@import url('https://fonts.googleapis.com/css2?family=Questrial&display=swap');
+
 .header {
     display: flex;
+    flex-direction: column;
    justify-content: flex-end;
     background-color: rgb(0, 0, 0);
 height: 10%;
    
-    
+ }    
 
+   .header-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    
+   }
    
-} 
 .logo {
 padding-top:20px ;
 padding-bottom: 20px;
         width: 35vw;
     }
+    .ventas-menor{
+
+        
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+        font-weight: bold;
+    background-color: white;
+}
+.ventas-menor p{
+    margin: 0;
+}
+
+
 .cart-widget{
     width: 30vw;
     display: flex;
+    flex-direction: row;
     justify-content: flex-end;
     align-items: center;
     font-size: 4.2vw;
     padding-right: 3%;
+}
+.direccion-header{
+    color: white;
+    padding-top: 10px;
+}
+.direccion-header-container{
+    display: flex;
+    justify-content: center;
+    font-family: "Questrial", sans-serif;
+    font-weight: 400;
+    font-style: normal;
 }
