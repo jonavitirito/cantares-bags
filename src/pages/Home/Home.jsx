@@ -1,33 +1,85 @@
-import React, { useEffect, useState } from 'react'
-import { collection,getDocs,getFirestore} from 'firebase/firestore';
+
+import { Link } from "react-router-dom";
+import { useCollection } from "../../hooks/UseCollection";
 import ItemListContainer from '../../components/ItemListContainer/ItemListContainer';
+import NavDropdown from 'react-bootstrap/NavDropdown';
+import "./Home.css";
+
+
+
 
 const Home = () => {
+  const {data}= useCollection("products");
 
-    const [products, setProducts] = useState([]);
+  
 
-    useEffect(()=>{
-   const db= getFirestore();
-   const productsCollection = collection(db, "products");
-   getDocs(productsCollection).then((snapshot)=>{
-    setProducts(snapshot.docs.map((doc)=>({id: doc.id, ...doc.data()})))
-   })
-   }, [])
-
-   
-      
   return (
-    <div className='products'>
-      <div className='filter'><img src="https://firebasestorage.googleapis.com/v0/b/cantares-bags-f2181.appspot.com/o/filter-found-removebg-preview.png?alt=media&token=5d4090ab-1597-4274-9c3f-005474704874" alt="" />
-        <h3>FILTRAR BÚSQUEDA</h3>
-        </div>
-        <ItemListContainer productsData={products}/>
-   
-    <div>
     
-    </div>
-     </div>
+    <div className='products'>
+         
+      <div className='filter'>
+        
+        
+
+      
+        {/* <NavDropdown title="FILTRAR BUSQUEDA" className="filtro" id="basic-nav-dropdown">
+        
+              
+        
+              
+                {data[0].categories.map((category, index) => {
+                  return (
+                    <NavDropdown.Item key={index} >
+                      <Link to={`/cantares-bags/${category}`} className='category'>{category}</Link>
+                    </NavDropdown.Item>
+                  );
+                })}
+              </NavDropdown> */}
+            
+            
+              {/* <NavDropdown.Item><Link to={"/categories/MOCHILAS"}>MOCHILAS</Link></NavDropdown.Item>
+              <NavDropdown.Divider />
+              <NavDropdown.Item>
+                Another action
+              </NavDropdown.Item>
+              <NavDropdown.Divider />
+              <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
+              <NavDropdown.Divider />
+              <NavDropdown.Item href="#action/3.4">
+                Separated link
+              </NavDropdown.Item> */}
+              
+            
+            
+            
+            </div>
+        
+        <ItemListContainer productsData={data}/>
+     </div>  
+        
+
+        
+
+
+ 
+
+ 
+    
+   
+
+
+   
+   
+   
+    
+
+    
+    
+   
+                   
+                    
+     
   )
 }
 
-export default Home
+export default Home;

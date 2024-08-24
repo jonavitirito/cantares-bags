@@ -3,6 +3,9 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import MainLayout from './Layout/MainLayout';
 import Home from './pages/Home/Home';
+import MainRouter from './routes/MainRouter';
+import ReactDOM from 'react-dom/client'
+
 
 
 // import ButtonComponent from './components/ButtonComponent/ButtonComponent';
@@ -15,7 +18,9 @@ const App = () => {
 
   return (
     <MainLayout>
-<Home/>
+
+<MainRouter/>
+
     </MainLayout>
     
   );

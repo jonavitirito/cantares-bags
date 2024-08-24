@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Orelega+One&family=Questrial&display=swap');
+
 .products{
     display: flex;
     flex-direction: row;
@@ -8,18 +10,15 @@
 .filter{
     display: flex;
     justify-content: center;
-    flex-direction: column;
+    height: 5vh;
+    width: 100vw;
     align-items: center;
-    background-color: rgb(155, 155, 155);
-    border: none;
-padding-top: 10px;
+    
+    font-family: "Orelega One", serif;
+    font-weight: 400;
+    font-style: normal;
+
     
 }
-.filter h3{
-    font-size: 20px;
-}
-.filter img{
-    
-    
-    width: 10%;
-}
+
+

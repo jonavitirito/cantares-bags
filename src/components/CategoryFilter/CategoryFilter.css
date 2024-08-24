@@ -1,0 +1,7 @@
+.filter{
+    display: flex;
+}
+.categorias{
+     display: flex;
+     flex-direction: row;
+}

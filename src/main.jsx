@@ -1,10 +1,9 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import { initializeApp } from "firebase/app";
+import React from 'react'
+import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import './index.css'
-
-
+import { initializeApp } from "firebase/app";
+import { getFirestore } from 'firebase/firestore';
 
 const firebaseConfig = {
   apiKey: "AIzaSyDYLwFSSDkjE2WmehZyGEA127zllKA_BZY",
@@ -14,9 +13,13 @@ const firebaseConfig = {
   messagingSenderId: "82964783162",
   appId: "1:82964783162:web:57f37513edeb4d7bd69503"
 };
-initializeApp(firebaseConfig);
-createRoot(document.getElementById('root')).render(
-  <StrictMode>
+
+const app = initializeApp(firebaseConfig);;
+const db = getFirestore(app);
+
+export { db };
+ReactDOM.createRoot(document.getElementById('root')).render(
+  <React.StrictMode>
     <App />
-  </StrictMode>,
+  </React.StrictMode>,
 )
