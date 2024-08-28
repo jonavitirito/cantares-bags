@@ -5,6 +5,7 @@ import './index.css'
 import { initializeApp } from "firebase/app";
 import { getFirestore } from 'firebase/firestore';
 
+
 const firebaseConfig = {
   apiKey: "AIzaSyDYLwFSSDkjE2WmehZyGEA127zllKA_BZY",
   authDomain: "cantares-bags-f2181.firebaseapp.com",
@@ -20,6 +21,11 @@ const db = getFirestore(app);
 export { db };
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
+    
+   
     <App />
+    
+    
+    
   </React.StrictMode>,
 )

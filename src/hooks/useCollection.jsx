@@ -1,22 +1,32 @@
 import React from "react";
-import {  collection, getFirestore, getDocs } from "firebase/firestore";
+import { collection, getDocs } from "firebase/firestore";
 import { db } from "../main";
 
-export const useCollection  = (collectionName) => {
+export const useCollection = (collectionName) => {
   const [data, setData] = React.useState([]);
   const [loading, setLoading] = React.useState(true);
+  const [error, setError] = React.useState(null);
 
   React.useEffect(() => {
-    const dataCollection  = collection(db, collectionName);
+    const fetchCollection = async () => {
+      try {
+        const dataCollection = collection(db, collectionName);
+        const snapshot = await getDocs(dataCollection);
+        const documents = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setData(documents);
+      } catch (error) {
+        setError(error);
+        console.error("Error fetching data:", error); // Imprimir el error en consola
+      } finally {
+        setLoading(false);
+      }
+    };
 
-    getDocs(dataCollection)
-      .then((snapshot) => {
-        setData(snapshot.docs.map((doc)=> ({id: doc.id, ...doc.data()})));
-      })
-      .catch((error) => console.log(error))
-      .finally(() => setLoading(false));
-    
-  }, []);
+    fetchCollection();
+  }, [collectionName]);
 
-  return {data};
+  return { data, loading, error };
 };

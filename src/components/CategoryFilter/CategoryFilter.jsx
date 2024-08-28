@@ -3,7 +3,7 @@ import { db } from '../../main';
 import { collection, getDocs } from 'firebase/firestore';
 import { NavDropdown } from "react-bootstrap";
 import { Link } from 'react-router-dom';
-
+import "./CategoryFilter.css";
 const CategoryFilter = () => {
   const [categories, setCategories] = useState([]);
   const [showCategories, setShowCategories] = useState(false);
@@ -21,7 +21,7 @@ const CategoryFilter = () => {
   };
 
   return (
-    <div>
+    
 
       
 
@@ -33,15 +33,17 @@ const CategoryFilter = () => {
 
               
       {showCategories && (
-        <ul>
+        <ul className='categorias'>
           {categories[0].map((category, index) => (
-            <NavDropdown.Item  key={index} >
+            
+            <NavDropdown.Item className= "category" key={index} >
+            
                       <Link to={`/cantares-bags/${category}`} className='category'>{category}</Link>
                     </NavDropdown.Item>
           ))}
         </ul>
       )}</NavDropdown> 
-    </div>
+    
   );
 };
 

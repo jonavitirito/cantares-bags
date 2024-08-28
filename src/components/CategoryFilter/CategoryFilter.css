@@ -1,7 +1,45 @@
-.filter{
-    display: flex;
+@import url('https://fonts.googleapis.com/css2?family=Orelega+One&family=Questrial&display=swap');
+*{
+    border: 0;
 }
 .categorias{
-     display: flex;
-     flex-direction: row;
+
+     width: 100%;
+     margin-bottom: 0;
+     padding-left: 0;
+ 
+
+}
+
+.dropdown-menu.show{
+    padding: 0;
+    border-radius: 0;
+}
+
+.filtro{
+    display: flex;
+    justify-content: center;
+    height: 5vh;
+    width: 100vw;
+    align-items: center;
+    
+    font-family: "Orelega One", serif;
+    font-weight: 400;
+    font-style: normal;
+    border-radius: 0;
+    border: none;
+    
+}
+.category{
+ 
+     /* border-top: 0.1rem solid rgb(119, 119, 119) ; */
+    color: rgb(0, 0, 0);
+   text-decoration: none;
+  display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; 
+}
+.category a{
+    border: none;
 }

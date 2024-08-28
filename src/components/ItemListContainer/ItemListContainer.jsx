@@ -1,52 +1,34 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react';
 import "./ItemListContainer.css";
 import ButtonComponent from '../ButtonComponent/ButtonComponent';
 
+const ItemListContainer = ({ productsData }) => {
+    const formatPrice = (price) => {
+        const priceString = price.toString();
+        return priceString.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+    };
 
-
-const ItemListContainer = ({productsData}) => {
-  const formatPrice = (price) => {
-  // Convierte el precio a una cadena
-  const priceString = price.toString();
-  // Usa una expresión regular para agregar puntos como separadores de miles
-  return priceString.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-};
-
-
-
-
-  
     return (
-     
-      productsData.map((products)=>{
-        
-                  return(
-                    
-            
-                    <div className='card' key={products.id}>
-                  
-                    <img src={products.img} alt="#"/>
-                    
-              {/* <Link to={`/item/${products.id}`}>    </Link> */}
+        productsData.map(product => (
+                <div className='card' key={product.id}>
+                    <img src={product.img} alt={product.title} />
                     <div className='card-info'>
-                      <h2 className='titulo-card'>{products.title}</h2>
-                      <p className='price'>
-                        ${formatPrice(products.price)}
-                      </p>
-                      <ButtonComponent  label="AÑADIR AL CARRITO" />
-                      <p className='ventas-minoristas'>VENTAS MINORISTAS POR WHATSAPP</p>
+                        <h2 className='titulo-card'>{product.title}</h2>
+                        <p className='price'>${formatPrice(product.price)}</p>
+                        <div className='button-add'>
+                            <ButtonComponent 
+                                label="AÑADIR AL CARRITO" 
+                                product={{ ...product, qty: 1 }} // Asegúrate de que `qty` está presente
+                            />
+                        </div>
+                        <p className='ventas-minoristas'>VENTAS MINORISTAS POR WHATSAPP</p>
                     </div>
-                  
-                
-                 </div> )
-                  })
-                
-                
-                 )
-                ;
-                
-                }
+                </div>
+            ))
+        
+    );
+}
+
+export default ItemListContainer;
 
 
-// Función para formatear el número con puntos como separadores de miles
-export default ItemListContainer

@@ -4,7 +4,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import MainLayout from './Layout/MainLayout';
 import Home from './pages/Home/Home';
 import MainRouter from './routes/MainRouter';
-import ReactDOM from 'react-dom/client'
+import { CartProvider } from './Context/CartContext';
+
 
 
 
@@ -17,12 +18,13 @@ import ReactDOM from 'react-dom/client'
 const App = () => {
 
   return (
+    <CartProvider>
     <MainLayout>
 
 <MainRouter/>
 
     </MainLayout>
-    
+    </CartProvider>
   );
 }
 
