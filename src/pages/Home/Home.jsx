@@ -22,7 +22,19 @@ const {data}= useCollection("products")
 
   
     <div className='products'> 
-    
+    <div className="ventas-menor">
+       <p>
+        ¡VENTAS POR MAYOR Y MENOR!
+       </p>
+       <p>
+       VENTA MAYORISTA A PARTIR DE LAS 6 UNIDADES
+       </p>
+        </div>
+        <div className="direccion-header-container">
+            <p className="direccion-header">Rojas 7, Monte Grande</p>
+        </div>
+
+
   <div className="filter">
        <CategoryFilter/>
       </div>

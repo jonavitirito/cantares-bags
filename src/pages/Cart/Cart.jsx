@@ -4,10 +4,13 @@ import CartDetailCard from '../../components/CartDetailCard/CartDetailCard';
 import "./Cart.css";
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Cart = () => {
-    const { itemCount } = useCart();
+    
+const { itemCount } = useCart();
+const navigate = useNavigate();
+
 
     const calculateSubtotal = () => {
         return itemCount.products.reduce((total, product) => total + (product.price * product.qty), 0);
@@ -16,6 +19,9 @@ const Cart = () => {
     const formatPrice = (price) => {
         const priceString = price.toString();
         return priceString.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+    };
+    const handleCheckout = () => {
+        navigate('/cantares-bags/checkout');
     };
 
     return (
@@ -40,7 +46,7 @@ const Cart = () => {
                     
                     
                     
-                <button className='checkout'>Continuar compra</button>    
+                    <button className='checkout' onClick={handleCheckout}>Continuar compra</button>   
                 </div>
                 
                 </div>

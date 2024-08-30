@@ -73,7 +73,11 @@
   padding-left: 7px ;
   padding-right: 7px ;
   margin-top: 5px;
-  
+  transition: 0.5s;
+}
+.button-remove:hover{
+    background-color: #f5f5f5;
+    color: #835242;
 }
 .button-qty{
     background-color: #835242;
@@ -85,18 +89,24 @@ align-items: center;
 justify-content: center;
 height: 20px;
 width: 20px;
-
+transition: 0.5s;
   font-size: large;
   /* padding-left: 7px ;
   padding-right: 7px ;
   padding-bottom: 3px; */
 }
+
+.button-qty:hover{
+    background-color: #f5f5f5;
+    color: #835242;
+}
+
+
 .btns-qty{
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-evenly;
     width: 70%;
+
 }
-
-

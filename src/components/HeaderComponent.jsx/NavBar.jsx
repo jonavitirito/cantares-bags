@@ -25,7 +25,7 @@ const NavBar = () => {
        <Link to="/cantares-bags/cart"> <CartWidgetComponent/></Link>
          </div>
 </div>
-        <div className="ventas-menor">
+        {/* <div className="ventas-menor">
        <p>
         ¡VENTAS POR MAYOR Y MENOR!
        </p>
@@ -35,7 +35,7 @@ const NavBar = () => {
         </div>
         <div className="direccion-header-container">
             <p className="direccion-header">Rojas 7, Monte Grande</p>
-        </div>
+        </div> */}
         </header>
     )
 }
