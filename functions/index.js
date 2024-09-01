@@ -7,69 +7,112 @@
  * See a full list of supported triggers at https://firebase.google.com/docs/functions
  */
 
-const {onRequest} = require("firebase-functions/v2/https");
-const logger = require("firebase-functions/logger");
-
 const functions = require('firebase-functions');
+const cors = require('cors')({ origin: true });
 const nodemailer = require('nodemailer');
 
-// Configura tu servicio de correo
+const { google } = require('googleapis');
+
+const OAuth2 = google.auth.OAuth2;
+
+const oauth2Client = new OAuth2(
+    '82964783162-2jlhu8sgssvj8tqq44btgpvmp4gs03ba.apps.googleusercontent.com', // Reemplaza con tu Client ID
+    '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', // Reemplaza con tu Client Secret
+    'https://developers.google.com/oauthplayground' // Redireccionamiento autorizado
+);
+
+oauth2Client.setCredentials({
+    refresh_token: '1//04kERf8W6nk6-CgYIARAAGAQSNwF-L9Ir6ORlJ8S8eGUzMYg7OaAm2R8Y__UOCtJZ3nrLyH4AuJ3IcI2KhtsyI0QfIVNevS1YTeE' // Reemplaza con tu Refresh Token
+});
+
+const accessToken = oauth2Client.getAccessToken();
+
 const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-        user: 'Cantaresbags@gmail.com', // Reemplaza con tu correo electrónico
-        pass: 'Cantaresbags.Cb', // Reemplaza con tu contraseña de correo electrónico
-    },
+        type: 'OAuth2',
+        user: 'your-email@gmail.com', // Tu correo electrónico de Gmail
+        clientId: '82964783162-2jlhu8sgssvj8tqq44btgpvmp4gs03ba.apps.googleusercontent.com',
+        clientSecret: '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',
+        refreshToken: '1//04kERf8W6nk6-CgYIARAAGAQSNwF-L9Ir6ORlJ8S8eGUzMYg7OaAm2R8Y__UOCtJZ3nrLyH4AuJ3IcI2KhtsyI0QfIVNevS1YTeE',
+        accessToken: accessToken
+    }
 });
 
-// Función para enviar el correo al cliente
-exports.sendOrderConfirmation = functions.https.onCall((data, context) => {
-    const { customerEmail, customerName, orderDetails, deliveryOption, address, totalAmount } = data;
+const mailOptions = {
+    from: 'Cantaresbags@gmail.com',
+    to: 'jona.vitiritti@gmail.com',
+    subject: 'Test Email with OAuth2',
+    text: 'Hello, this is a test email sent using OAuth2!'
+};
 
-    // Correo al cliente
-    const mailOptionsToCustomer = {
-        from: 'Cantares Bags Cantaresbags@gmail.com',
-        to: customerEmail,
-        subject: 'Gracias por tu compra en Cantares Bags',
-        text: `Muchas Gracias por Confiar en Cantares Bags, en breves nos estaremos comunicando con vos para informarte sobre el estado de tu pedido.\n\n- Personal de Cantares Bags`,
-    };
+transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+        console.error('Error sending email:', error);
+    } else {
+        console.log('Email sent:', info.response);
+    }
+});
 
-    // Correo al equipo de trabajo
-    const mailOptionsToWork = {
-        from: 'Cantares Bags <tu-email@gmail.com>',
-        to: 'Cantaresbagspedidos@gmail.com',
-        subject: `Nuevo pedido de ${customerName}`,
-        text: `
-            Detalles del pedido:
-            ---------------------
-            Nombre: ${customerName}
-            Email: ${customerEmail}
-            Teléfono: ${data.phone}
-            Dirección: ${address}
-            Localidad: ${data.locality}
-            Opción de entrega: ${deliveryOption}
+exports.sendOrderConfirmation = functions.https.onRequest((req, res) => {
+    cors(req, res, () => {
+        try {
+            console.log('Request Headers:', req.headers);
+            console.log('Request Body:', req.body);
 
-            Productos:
-            ${orderDetails.map(product => `
-            - ${product.img} ${product.title}: ${product.qty} x $${product.price}`).join('\n')}
+            const { customerEmail, orderDetails } = req.body;
 
-            Total a pagar: $${totalAmount}
-        `,
-    };
+            if (!customerEmail || !orderDetails) {
+                console.error('Missing required fields:', { customerEmail, orderDetails });
+                return res.status(400).send('Missing required fields');
+            }
 
-    // Enviar ambos correos
-    return Promise.all([
-        transporter.sendMail(mailOptionsToCustomer),
-        transporter.sendMail(mailOptionsToWork),
-    ])
-    .then(() => {
-        return { success: true };
-    })
-    .catch(error => {
-        console.error('Error al enviar correos:', error);
-        return { success: false, error: error.message };
+            const transporter = nodemailer.createTransport({
+                service: 'gmail',
+                auth: {
+                    user: 'Cantaresbags@gmail.com',
+                    pass: 'ntzh sixn yclq akih'
+                }
+            });
+
+            const mailOptions = {
+                from: 'Cantaresbags@gmail.com',
+                to: customerEmail,
+                subject: 'Order Confirmation',
+                text: `Order Details: ${JSON.stringify(orderDetails)}`
+            };
+
+            transporter.sendMail(mailOptions, (error, info) => {
+                if (error) {
+                    console.error('Error sending email:', error);
+                    return res.status(500).send('Error sending email');
+                }
+                console.log('Email sent:', info.response);
+                res.status(200).send('Order confirmation sent');
+            });
+        } catch (error) {
+            console.error('Error processing request:', error);
+            res.status(500).send('Internal Server Error');
+        }
     });
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // Create and deploy your first functions
 // https://firebase.google.com/docs/functions/get-started
