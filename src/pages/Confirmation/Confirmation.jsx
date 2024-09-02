@@ -10,43 +10,50 @@ const Confirmation = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const [files, setFiles] = useState([]);
-
-    const { cartItems = [] } = useCart();
+    
+    const { cartItems = [], clearCart } = useCart();
     const { formData = {}, totalAmount = 0 } = location.state || {};
 
-    const handleSubmit = async (event) => {
-        event.preventDefault();
+    const handleSubmit = async (e) => {
+        e.preventDefault();
     
-        const orderData = {
-            customerEmail: formData.email, // Usa el email del formData
-            orderDetails: {
-                items: cartItems.map(item => ({
-                    id: item.id,
-                    name: item.name,
-                    quantity: item.quantity
-                })),
-                total: totalAmount // Usa el totalAmount que ya tienes
-            }
-        };
+        const functions = getFunctions();
+        const sendOrderConfirmation = httpsCallable(functions, 'sendOrderConfirmation');
+    
+        const orderDetails = cartItems.map(item => ({
+            name: item.name,
+            qty: item.qty,
+            price: item.price,
+        }));
     
         try {
-            const response = await fetch('https://us-central1-cantares-bags-f2181.cloudfunctions.net/sendOrderConfirmation', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(orderData)
+            const result = await sendOrderConfirmation({
+                customerEmail: formData.email,
+                customerName: formData.firstName + ' ' + formData.lastName,
+                phone: formData.phone,
+                address: formData.address,
+                locality: formData.city,
+                deliveryOption: formData.deliveryOption,
+                orderDetails,
+                totalAmount,
             });
     
-            if (!response.ok) {
-                const errorText = await response.text(); // Captura el mensaje de error del backend
-                throw new Error(`HTTP error! status: ${response.status}, ${errorText}`);
+            if (result.data.success) {
+                alert('Compra finalizada con éxito. ¡Gracias por tu compra!');
+                
+                // Limpiar el carrito y borrar el localStorage
+                clearCart();
+                localStorage.clear();
+
+                // Redirigir a una página de agradecimiento o donde prefieras
+                navigate('/gracias'); // Redirige a una página de agradecimiento (opcional)
+            } else {
+                console.error('Error de la función en Firebase:', result.data.error);
+                alert('Hubo un problema al finalizar la compra. Inténtalo de nuevo.');
             }
-    
-            const result = await response.text();
-            console.log('Order confirmation sent:', result);
         } catch (error) {
             console.error('Error al enviar el pedido:', error);
+            alert('Hubo un problema al finalizar la compra. Inténtalo de nuevo.');
         }
     };
     

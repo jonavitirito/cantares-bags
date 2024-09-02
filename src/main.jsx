@@ -17,7 +17,7 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);;
 const db = getFirestore(app);
-
+export {app};
 export { db };
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
