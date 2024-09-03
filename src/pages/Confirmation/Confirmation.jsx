@@ -14,48 +14,58 @@ const Confirmation = () => {
     const { cartItems = [], clearCart } = useCart();
     const { formData = {}, totalAmount = 0 } = location.state || {};
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-    
+    const sendOrderEmails = async (orderDetails) => {
         const functions = getFunctions();
-        const sendOrderConfirmation = httpsCallable(functions, 'sendOrderConfirmation');
-    
-        const orderDetails = cartItems.map(item => ({
-            name: item.name,
-            qty: item.qty,
-            price: item.price,
-        }));
-    
-        try {
-            const result = await sendOrderConfirmation({
-                customerEmail: formData.email,
-                customerName: formData.firstName + ' ' + formData.lastName,
-                phone: formData.phone,
-                address: formData.address,
-                locality: formData.city,
-                deliveryOption: formData.deliveryOption,
-                orderDetails,
-                totalAmount,
-            });
-    
-            if (result.data.success) {
-                alert('Compra finalizada con éxito. ¡Gracias por tu compra!');
-                
-                // Limpiar el carrito y borrar el localStorage
-                clearCart();
-                localStorage.clear();
+        const sendEmails = httpsCallable(functions, 'sendOrderEmails');
 
-                // Redirigir a una página de agradecimiento o donde prefieras
-                navigate('/gracias'); // Redirige a una página de agradecimiento (opcional)
-            } else {
-                console.error('Error de la función en Firebase:', result.data.error);
-                alert('Hubo un problema al finalizar la compra. Inténtalo de nuevo.');
-            }
+        try {
+            const result = await sendEmails({
+                customerEmail: formData.email,
+                adminEmail: 'correo_de_la_tienda@example.com',
+                orderDetails: orderDetails,
+            });
+            console.log('Correo enviado:', result.data);
         } catch (error) {
-            console.error('Error al enviar el pedido:', error);
-            alert('Hubo un problema al finalizar la compra. Inténtalo de nuevo.');
+            console.error('Error al enviar el correo:', error);
         }
     };
+
+    const handleCheckout = () => {
+        const orderDetails = {
+          name: formData.firstName + ' ' + formData.lastName,
+          address: formData.address,
+          email: formData.email,
+          phone: formData.phone,
+          city: formData.city,
+          items: cartItems.map(item => ({
+            title: item.name,
+            img: item.img,  // Asegúrate de que la URL de la imagen sea accesible
+            qty: item.qty,
+            price: item.price,
+            subtotal: item.qty * item.price
+          })),
+          total: totalAmount,
+          receipt: '', // Aquí podrías poner el URL del comprobante si lo has subido
+          deliveryOption: formData.deliveryOption // Asegúrate de incluir la opción de entrega
+        };
+      
+        sendOrderEmails(orderDetails)
+          .then(() => {
+            // Limpiar el carrito y borrar el localStorage
+            clearCart();
+            localStorage.clear();
+      
+            // Redirigir a una página de agradecimiento o donde prefieras
+            navigate('/gracias'); // Redirige a una página de agradecimiento (opcional)
+          })
+          .catch(error => {
+            console.error('Error al finalizar la compra:', error);
+            alert('Hubo un problema al finalizar la compra. Inténtalo de nuevo.');
+          });
+      };
+
+   
+
     
     
 
@@ -72,10 +82,12 @@ const Confirmation = () => {
             {formData ? (
                 <div className="form-details">
                     <div className='datos-container'>
-                        <Link to="/cantares-bags/Checkout/">
-                            <FontAwesomeIcon icon={faArrowLeft} size="2xl" style={{color: "#482115",}} />
+                        <Link to="/cantares-bags/Checkout/" className='back'>
+                            <FontAwesomeIcon icon={faArrowLeft} size="xl" style={{color: "#482115",}} />
                         </Link>
+                        <div className='datos-cliente'>
                         <h2>Datos del Cliente</h2>
+                        </div>
                     </div>
                     <div>
                         <p><strong>Nombre:</strong> <span>{formData.firstName}</span></p>
@@ -93,13 +105,16 @@ const Confirmation = () => {
                         <h2>Copia el CBU y paga con tu billetera virtual</h2>
                         <h3>0000003100040986885347</h3>
                         <h4>Luis Antonio Gallardo</h4>
-                        <img src="https://firebasestorage.googleapis.com/v0/b/cantares-bags-f2181.appspot.com/o/WhatsApp%20Image%202024-08-29%20at%2020.47.30.jpeg?alt=media&token=6dafc563-9e74-4db5-b666-fc8ee469ba9f" alt="mp-logo" />
+                        <img src="https://firebasestorage.googleapis.com/v0/b/cantares-bags-f2181.appspot.com/o/Mp.jpg?alt=media&token=b5b144b4-3423-4511-b271-4cf926caccbb" alt="mp-logo" />
                     </div>
                     <div className='comprobante'>
                         <h2>Subir comprobante de transferencia</h2>
                         <input className='comprobante-img' type="file" multiple onChange={handleFileChange} />
                     </div> 
+                    
                     <div className="options-container">
+                        <h2>¿Qué opción de entrega vas a elegir?</h2>
+                        <div className='options'>
                         <label className="option">
                             <input 
                                 type="radio" 
@@ -128,8 +143,9 @@ const Confirmation = () => {
                                 </div>
                             </div>
                         </label>
+                        </div>
                     </div>
-                    <button className='finalizar' onClick={handleSubmit}>Finalizar Compra</button>
+                    <button className='finalizar' onClick={handleCheckout}>Finalizar Compra</button>
                 </div>
             ) : (
                 <p>No se encontraron detalles de la compra.</p>

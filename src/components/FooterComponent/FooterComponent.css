@@ -5,9 +5,12 @@
 
 
 
-.footer{height: 5%;
+.footer{
+    
+    
 bottom: 0;
 width: 100%;
+position: relative;
 
 
 }
@@ -22,6 +25,7 @@ width: 100%;
     font-family: "Orelega One", serif;
     font-weight: 400;
     font-style: normal;
+    position: relative;
 
 
 } 

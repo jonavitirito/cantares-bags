@@ -1,7 +1,25 @@
 
 .cartwidget{
     display: flex;
+text-decoration: none;
+align-items: flex-end;
+
 }
+.cart-widget a{
+    text-decoration: none;
+}
+
 .item-count{
     color: white;
+}
+.number-cart{
+    text-decoration: 0;
+    color: white;
+    border: none;
+    margin-top: 3px;
+    font-size: x-small;
+    height: max-content;
+}
+.cart-count{
+    margin-top: 50px;
 }

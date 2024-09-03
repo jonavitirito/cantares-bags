@@ -11,17 +11,20 @@ const ItemListContainer = ({ productsData }) => {
     return (
         productsData.map(product => (
                 <div className='card' key={product.id}>
+                    <h2 className='titulo-card'>{product.title}</h2>
                     <img src={product.img} alt={product.title} />
                     <div className='card-info'>
-                        <h2 className='titulo-card'>{product.title}</h2>
+                        
                         <p className='price'>${formatPrice(product.price)}</p>
+                        
                         <div className='button-add'>
                             <ButtonComponent 
                                 label="AÑADIR AL CARRITO" 
                                 product={{ ...product, qty: 1 }} // Asegúrate de que `qty` está presente
                             />
                         </div>
-                        <p className='ventas-minoristas'>VENTAS MINORISTAS POR WHATSAPP</p>
+                        <p className='ventas-minoristas'>{product.description}</p>
+                        <p className='stock'>Disponible : {product.stock}</p>
                     </div>
                 </div>
             ))

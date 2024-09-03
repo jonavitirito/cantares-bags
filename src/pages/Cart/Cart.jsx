@@ -29,7 +29,7 @@ const navigate = useNavigate();
 
             <div className='title-container'>
                <Link to="/cantares-bags/"> <FontAwesomeIcon icon={faArrowLeft} size="2xl" style={{color: "#482115",}} /></Link>
-            <h1>CARRITO DE COMPRAS</h1></div>
+            <h2 className='carrito-compras'>CARRITO DE COMPRAS</h2></div>
             {itemCount.products.length === 0 ? (
                 <h2 className='p'>El carrito está vacío</h2>
             ) : (

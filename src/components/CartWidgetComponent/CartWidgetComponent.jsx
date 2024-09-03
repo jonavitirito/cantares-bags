@@ -16,7 +16,7 @@ const CartWidgetComponent =()=>{
         <FontAwesomeIcon icon={faCartShopping} size="2xl" style={{color: "#f5f5f5",}} />
                
         
-        {totalItemsInCart > 0 && <span className="cart-count">{totalItemsInCart}</span>}
+       <div className="number-cart">{totalItemsInCart > 0 && <span className="cart-count">{totalItemsInCart}</span>}</div>
    </div>
     
 

@@ -185,7 +185,7 @@ export const CartProvider = ({ children }) => {
 
   // Asegúrate de que itemCount.products sea un array
   const totalItemsInCart = (itemCount.products || []).reduce((total, item) => total + item.qty, 0);
-
+  
   return (
     <CartContext.Provider value={{ itemCount, addToCart, removeFromCart, updateProductQuantity, totalItemsInCart }}>
       {children}
